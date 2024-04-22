@@ -1,0 +1,53 @@
+{
+	"name": "seedmonic",
+	"version": "0.0.1",
+	"description": "seedmonic",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev --port 3030 --host",
+		"dev:open": "vite dev --port 3030 --host --open",
+		"start": "vite dev --host",
+		"build": "vite build",
+		"preview": "vite preview --port 3030 --host",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Saturnych/seedmonic.git"
+	},
+  "bugs": {
+    "url": "https://github.com/Saturnych/seedmonic/issues"
+  },
+	"homepage": "https://seedmonic.ru/",
+	"keywords": [
+		"sveltekit",
+		"typescript",
+		"bip39"
+	],
+  "author": "Saturnych",
+  "license": "ISC",
+	"devDependencies": {
+		"@fontsource/fira-mono": "^5.0.13",
+		"@neoconfetti/svelte": "^2.2.1",
+		"@sveltejs/adapter-auto": "^3.2.0",
+		"@sveltejs/kit": "^2.5.7",
+		"@sveltejs/vite-plugin-svelte": "^3.1.0",
+		"@types/eslint": "^8.56.10",
+		"@typescript-eslint/eslint-plugin": "^7.7.0",
+		"@typescript-eslint/parser": "^7.7.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.37.0",
+		"prettier": "^3.1.1",
+		"prettier-plugin-svelte": "^3.2.3",
+		"svelte": "^4.2.15",
+		"svelte-check": "^3.6.9",
+		"tslib": "^2.4.1",
+		"typescript": "^5.4.5",
+		"vite": "^5.2.10"
+	},
+	"type": "module"
+}
