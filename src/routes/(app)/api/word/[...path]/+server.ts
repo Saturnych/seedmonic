@@ -1,7 +1,6 @@
 import type { Event, Layout } from '$lib/types';
-import { error, type Response } from '@sveltejs/kit';
-import { getRandomInt, getWordBlocks, returnJson } from '$lib/utils';
-
+import type { Response } from '@sveltejs/kit';
+import { getWordBlocks, returnJson } from '$lib/utils';
 import { DEBUG } from '$lib/vars/client';
 
 export const GET = async (event: Event): Response => {

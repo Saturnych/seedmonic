@@ -1,3 +1,4 @@
+import { getWordBlocks, returnJson } from '$lib/utils';
 import consts from '$lib/vars/consts';
 
 export const GET = async () => {
@@ -7,5 +8,8 @@ export const GET = async () => {
 		message: 'ok',
 		version: consts.version,
 	};
-	return new Response(JSON.stringify(data));
+	return returnJson({
+		timestamp: Date.now(),
+		uptime: process?.uptime(),
+	});
 };

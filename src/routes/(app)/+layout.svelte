@@ -1,7 +1,14 @@
-<script>
-	import Header from './Header.svelte';
+<script lang="ts">
+	import { dev } from '$app/environment';
+	import Metrika from '$lib/components/Metrika.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import consts from '$lib/vars/consts';
 	import './styles.css';
 </script>
+
+{#if !dev}
+	<Metrika />
+{/if}
 
 <div class="app">
 	<Header />
@@ -11,7 +18,7 @@
 	</main>
 
 	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+		<p><nobr>&copy; 2024 <a href="{consts.homepage}">{consts.title}</a></nobr></p>
 	</footer>
 </div>
 

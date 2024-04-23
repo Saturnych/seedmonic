@@ -11,4 +11,5 @@ export default {
 	locale: 'en-EN',
 	theme: 'system', // system, dark or light
 	email: 'm@seedmonic.ru',
+	ymId: 97110177,
 };
