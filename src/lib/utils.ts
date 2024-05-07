@@ -33,11 +33,13 @@ export const splitLines = (str: string, eol = /\r?\n/): string[] => str.split(eo
 
 export const getWordBlocks = (data: { num?: number; word?: string; lang?: string }): number[] => {
   let { num, word, lang = 'en' } = data;
+	word = word.split(' ').join('');
+	console.log('word:', word);
 	const words = wordlists[lang];
 	console.log('lang:', lang, 'words.length:', words.length);
   if (!num && word && words?.includes(word)) num = words.indexOf(word)+1;
   if (num && !word) word = words[num-1];
-  if (!num && !word) throw Error('wrong data!');
+  if (!num || !word) throw Error('wrong data!');
   console.log('num:', num, 'word:', word);
 
   const base: number = 2;
