@@ -31,30 +31,35 @@ export const getRandomInt = (min: number, max: number): number => {
 
 export const splitLines = (str: string, eol = /\r?\n/): string[] => str.split(eol).map(s=>s.trim()).filter(s=>s.length>0);
 
-export const getWordBlocks = (data: { num?: number; word?: string; leng?: string }): number[] => {
+export const getWordBlocks = (data: { num?: number; word?: string; lang?: string }): number[] => {
   let { num, word, lang = 'en' } = data;
 	const words = wordlists[lang];
-	console.log('words:', words.length);
+	console.log('lang:', lang, 'words.length:', words.length);
   if (!num && word && words?.includes(word)) num = words.indexOf(word)+1;
   if (num && !word) word = words[num-1];
   if (!num && !word) throw Error('wrong data!');
   console.log('num:', num, 'word:', word);
 
-  const base: string = 2;
-  const bits = num.toString(base);
-  const arr = bits.split('').reverse();
-  const blocks = [];
+  const base: number = 2;
+  const bits: string = num.toString(base);
+  const arr: string[] = bits.split('').reverse();
+  const blocks: number[] = [];
+	const pows: number[] = [];
   for (let i=0;i<arr.length;i++) {
-    if (Number(arr[i])>0) blocks.push(Math.pow(base, i));
+    if (Number(arr[i])>0) {
+			pows.push(i);
+			blocks.push(Math.pow(base, i));
+		}
   }
 
-  const sum = blocks.reduce((a,b)=>(a+b),0);
+  const sum: number = blocks.reduce((a,b)=>(a+b),0);
+	const verified: boolean = sum===num;
   console.log('10-bit number:', num, '2-bit string:', bits);
   console.log('arr:', arr);
-  console.log('blocks:', blocks);
-  console.log('checksum', sum, 'verified:', sum===num);
+  console.log('pows:', pows, 'blocks:', blocks);
+  console.log('checksum', sum, 'verified:', verified);
 
-  return (sum===num) ? { blocks, num, bits } : null;
+  return (verified) ? { num, bits, pows, blocks } : null;
 };
 
 /**
