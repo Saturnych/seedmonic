@@ -1,7 +1,15 @@
 import type { RequestHandler, Response } from '@sveltejs/kit';
 import { json } from '@sveltejs/kit';
+import { wordlists } from '$lib/wordlists';
 import consts from '$lib/vars/consts';
-import words from './english.json';
+
+export const normalize = (string: string): string => {
+	return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+};
+
+export const isEnglish = (word: string): boolean => {
+	return /^[a-z0-9]+$/i.test(word);
+};
 
 export const returnJson = (
 	data: Record<string, any>,
@@ -23,9 +31,10 @@ export const getRandomInt = (min: number, max: number): number => {
 
 export const splitLines = (str: string, eol = /\r?\n/): string[] => str.split(eol).map(s=>s.trim()).filter(s=>s.length>0);
 
-export const getWordBlocks = (data: { num?: number; word?: string }): number[] => {
-  console.log('words:', words.length);
-  let { num,  word } = data;
+export const getWordBlocks = (data: { num?: number; word?: string; leng?: string }): number[] => {
+  let { num, word, lang = 'en' } = data;
+	const words = wordlists[lang];
+	console.log('words:', words.length);
   if (!num && word && words?.includes(word)) num = words.indexOf(word)+1;
   if (num && !word) word = words[num-1];
   if (!num && !word) throw Error('wrong data!');
@@ -35,13 +44,11 @@ export const getWordBlocks = (data: { num?: number; word?: string }): number[] =
   const bits = num.toString(base);
   const arr = bits.split('').reverse();
   const blocks = [];
-
   for (let i=0;i<arr.length;i++) {
     if (Number(arr[i])>0) blocks.push(Math.pow(base, i));
   }
 
   const sum = blocks.reduce((a,b)=>(a+b),0);
-
   console.log('10-bit number:', num, '2-bit string:', bits);
   console.log('arr:', arr);
   console.log('blocks:', blocks);

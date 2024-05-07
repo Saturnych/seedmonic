@@ -1,60 +1,28 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
 	import Metrika from '$lib/components/Metrika.svelte';
-	import Header from '$lib/components/Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
 	import consts from '$lib/vars/consts';
-	import './styles.css';
+	import './app.css';
 </script>
+
+<svelte:head>
+	<title>bip39 wordlist // {consts.title}</title>
+	<style>
+		@import url('https://fonts.cdnfonts.com/css/sf-mono?styles=36554,36555,36556');
+	</style>
+</svelte:head>
 
 {#if !dev}
 	<Metrika />
 {/if}
 
-<div class="app">
-	<Header />
-
-	<main>
+<div class="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-2 px-8 pb-12 font-mono sm:pb-16">
+	<main class="flex h-full flex-1 flex-col pt-[4vh] pb-6">
 		<slot />
 	</main>
 
 	<footer>
-		<p><nobr>&copy; 2024 <a href="{consts.homepage}">{consts.title}</a></nobr></p>
+		<Footer />
 	</footer>
 </div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>

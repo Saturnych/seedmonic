@@ -1,94 +1,94 @@
-<script>
-	import Counter from '$lib/components/Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+<script lang="ts">
+	import Icon from '@iconify/svelte';
+	import type { Lang } from '$lib/types';
+	import SearchInput from '$lib/components/SearchInput.svelte';
+	import HeaderInfo from '$lib/components/bip39/HeaderInfo.svelte';
+	import LanguagePicker from '$lib/components/bip39/LanguagePicker.svelte';
+	import Word from '$lib/components/bip39/Word.svelte';
+	import consts from '$lib/vars/consts';
+	import { isEnglish, normalize } from '$lib/utils';
+	import { wordlists as wordSets } from '$lib/wordlists';
+
+	let lang: Lang = 'en';
+	$: wordlist = wordSets[lang];
+
+	let search: string = '';
+	$: _search = search.toLowerCase().trim();
+
+	const clearSearch = () => (search = '');
+
+	const wordOrdinal = (word: string) => {
+		return wordlist.indexOf(word) + 1;
+	};
+
+	const paddedOrdinal = (word: string) => {
+		return wordOrdinal(word).toString().padStart(4, '0');
+	};
+
+	$: filteredWordlist = wordlist.filter((word: string) => {
+		if (!isEnglish(_search)) {
+			const nativeWordMatch = word.startsWith(_search);
+			return nativeWordMatch;
+		}
+
+		const wordMatch = normalize(word).startsWith(normalize(_search));
+		if (wordMatch) return true;
+
+		const normalizedWordMatch = normalize(word).startsWith(normalize(_search));
+		if (normalizedWordMatch) return true;
+
+		const parsedNumber = parseInt(_search);
+		if (isNaN(parsedNumber)) return false;
+
+		const parsedNumberString = parsedNumber.toString();
+
+		const paddedOrdinalMatch = paddedOrdinal(word).startsWith(parsedNumberString);
+		const ordinalMatch = wordOrdinal(word).toString().startsWith(parsedNumberString);
+
+		return paddedOrdinalMatch || ordinalMatch;
+	});
+
+	const isFirstExampleOfLetter = (word: string, idx: number) => {
+		if (['cn', 'cnt'].includes(lang)) return false;
+
+		if (idx === 0) return true;
+
+		const firstLetter = (word?: string) => word?.at(0);
+		return firstLetter(word) !== firstLetter(filteredWordlist?.at(idx - 1));
+	};
 </script>
 
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
-</svelte:head>
+<div>
+	<header class="mb-8">
+		<LanguagePicker bind:lang {wordSets} />
+		<div class="mt-6 flex flex-col items-start justify-between gap-8 sm:flex-row">
+			<HeaderInfo />
+			<SearchInput bind:value={search} />
+		</div>
+	</header>
 
-<section>
-		<!-- Basic Circle using CSS `border-radius` Property -->
-    <div class="circle-basic">
-        Basic Circle
-    </div>
+	<section>
+		{#if filteredWordlist?.length}
+			<div class="cursor-crosshair columns-1 gap-8 sm:mt-16 sm:columns-3 md:columns-4">
+				{#each filteredWordlist as word, i}
+					<Word {word} ordinal={wordOrdinal(word)} highlighted={isFirstExampleOfLetter(word, i)} />
+				{/each}
+			</div>
+		{:else}
+			<div class="mt-20 flex flex-col items-center justify-center gap-5 text-neutral-50/20">
+				<p class="px-2">no words found</p>
+				<button
+					on:click={clearSearch}
+					class="flex items-center gap-1 rounded-sm bg-neutral-50/5 px-2 py-1 text-sm ring-neutral-600 hover:text-neutral-50/40 focus:outline-none focus:ring-2"
+				>
+					clear
+					<Icon icon="ic:sharp-clear" class="text-base" />
+				</button>
+			</div>
+		{/if}
+	</section>
 
-    <!-- Circle with Text using CSS `border-radius` Property -->
-    <div class="circle-text">
-        Circle with Text
-    </div>
-
-		<div class="circle-simple">
-        Simple Circle
-    </div>
-
-		<svg viewBox="0 0 80 80" width="80" height="80">
-		  <circle class="circle" cx="40" cy="40" r="36" />
-		</svg>
-
-		<svg width="100" height="100">
-		  <circle cx="50" cy="50" r="40" fill="#e74c3c" stroke="#3498db" stroke-width="3" />
-		</svg>
-
-    <!-- SVG Circle using SVG <circle> Element -->
-    <svg class="svg-circle" width="100" height="100">
-      <circle cx="50" cy="50" r="40" fill="#3498db" />
-    </svg>
-</section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	.circle {
-	  background: #456BD9;
-	  border: 0.1875em solid #0F1C3F;
-	  border-radius: 50%;
-	  box-shadow: 0.375em 0.375em 0 0 rgba(15, 28, 63, 0.125);
-	  height: 5em;
-	  width: 5em;
-	}
-
-	/* CSS for creating a basic circle */
-	.circle-basic {
-	   width: 100px;
-	   height: 100px;
-	   background-color: #3498db;
-	   border-radius: 50%; /* Makes the div a circle */
-	   text-align: center;
-	   line-height: 100px; /* Vertically centers text */
-	   color: #fff;
-	   font-size: 18px;
-	   margin-bottom: 10px; /* Adds space between circles */
-	}
-
-	/* CSS for creating a circle with text inside using CSS border-radius */
-	.circle-text {
-	   width: 120px;
-	   height: 120px;
-	   background-color: #e74c3c;
-	   border-radius: 50%;
-	   text-align: center;
-	   line-height: 120px; /* Vertically centers text */
-	   color: #fff;
-	   font-size: 18px;
-	}
-
-	.circle-simple {
-	  background: #456BD9;
-	  clip-path: circle(50%);
-	  height: 5em;
-	  width: 5em;
-		text-align: center;
-		line-height: 5em; /* Vertically centers text */
-		color: #fff;
-		font-size: 14px;
-	}
-</style>
+	<div class="mt-12 px-1">
+		<a href="{consts.repo}" target="_blank" class="flex items-center gap-2 text-neutral-50/20 hover:underline">source&nbsp;<Icon icon="ic:sharp-arrow-outward" /></a>
+	</div>
+</div>
