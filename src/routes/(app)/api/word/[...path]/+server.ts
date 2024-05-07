@@ -3,14 +3,14 @@ import type { Response } from '@sveltejs/kit';
 import { getWordBlocks, returnJson } from '$lib/utils';
 import { DEBUG } from '$lib/vars/client';
 
-export const GET = async (event: Event): Response => {
+const parseRequest = async (event: Event): Response => {
 	try {
 		const { pathname, searchParams } = event.url;
+		const paths: string[] = pathname.split('/').filter(s=>s.length>0).reverse();
 		const lang = searchParams.get('lang');
 		const num = searchParams.get('num');
-		let word = searchParams.get('word');
-		const paths: string[] = pathname.split('/').filter(s=>s.length>0).reverse();
-		console.log(paths);
+		let word = decodeURIComponent(searchParams.get('word'));
+		//console.log(encodeURIComponent('ábaco'));
 		if (paths?.length>2 && !word) word = paths[0];
 		if (!word) throw error(401, 'Word needed');
 		return returnJson(getWordBlocks({ word }))
@@ -19,3 +19,7 @@ export const GET = async (event: Event): Response => {
 		return returnJson(err, err.status ?? 400, err.body?.message ?? 'Error', false);
 	}
 };
+
+export const GET = async (event: Event): Response => parseRequest(event);
+
+export const POST = async (event: Event): Response => parseRequest(event);
