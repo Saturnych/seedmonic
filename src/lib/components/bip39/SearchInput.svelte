@@ -5,7 +5,7 @@
 	export let value = '';
 	export let classes = '';
 	export let name = '';
-	export let placeholder = 'search';
+	export let placeholder = 'search word';
 
 	$: hasValue = !!normalize(value.trim())?.length;
 </script>
@@ -17,7 +17,7 @@
 		<Icon icon="ic:sharp-search" class="text-xl text-neutral-600" />
 	</button>
 	<input
-		aria-label="Search word"
+		aria-label="{placeholder}"
 		type="text"
 		bind:value
 		class={`w-full bg-transparent py-2 px-3 placeholder:text-neutral-600 focus:outline-none focus-visible:outline-none ${classes}`}

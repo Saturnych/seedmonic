@@ -18,6 +18,10 @@
 	</div>
 {/if}
 
+<div class="mt-12 px-1">
+	<a href="{consts.repo}" target="_blank" class="flex items-center gap-2 text-neutral-50/20 hover:underline">source&nbsp;<Icon icon="ic:sharp-arrow-outward" /></a>
+</div>
+
 <div class="mt-auto">
 	<div class="flex flex-col items-center justify-center gap-8 py-4">
 		<a href="{consts.homepage}" title="{consts.title}"><Icon icon="ic:sharp-currency-bitcoin" class="text-3xl text-orange-500" /></a>
