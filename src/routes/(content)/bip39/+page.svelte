@@ -1,13 +1,13 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import type { Lang } from '$lib/types';
+	import { isEnglish, normalize } from '$lib/utils';
+	import { wordlists as wordSets } from '$lib/wordlists';
+	import consts from '$lib/vars/consts';
 	import SearchInput from '$lib/components/bip39/SearchInput.svelte';
 	import HeaderInfo from '$lib/components/bip39/HeaderInfo.svelte';
 	import LanguagePicker from '$lib/components/bip39/LanguagePicker.svelte';
 	import Word from '$lib/components/bip39/Word.svelte';
-	import consts from '$lib/vars/consts';
-	import { isEnglish, normalize } from '$lib/utils';
-	import { wordlists as wordSets } from '$lib/wordlists';
 
 	let lang: Lang = 'en';
 	$: wordlist = wordSets[lang];
