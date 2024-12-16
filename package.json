@@ -2,33 +2,33 @@
 	"name": "seedmonic",
 	"version": "0.0.1",
 	"description": "bip39 wordlists & search",
-	"private": true,
+	"private": false,
+	"type": "module",
+	"license": "MIT",
+	"homepage": "https://seedmonic.ru/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Saturnych/seedmonic"
+	},
+	"bugs": {
+		"url": "https://github.com/Saturnych/seedmonic/issues"
+	},
+	"author": {
+		"name": "Denis Glebko",
+		"email": "saturnych@gmail.com",
+		"url": "https://github.com/Saturnych"
+	},
 	"scripts": {
-		"dev": "vite dev --port 3030 --host",
-		"dev:open": "vite dev --port 3030 --host --open",
+		"dev": "vite dev --port 3300 --host",
+		"dev:open": "vite dev --port 3300 --host --open",
 		"start": "vite dev --host",
 		"build": "vite build",
-		"preview": "vite preview --port 3030 --host",
+		"preview": "vite preview --port 3311 --host",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write ."
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Saturnych/seedmonic.git"
-	},
-	"bugs": {
-		"url": "https://github.com/Saturnych/seedmonic/issues"
-	},
-	"homepage": "https://seedmonic.ru/",
-	"keywords": [
-		"sveltekit",
-		"typescript",
-		"bip39"
-	],
-	"author": "Saturnych",
-	"license": "ISC",
 	"devDependencies": {
 		"@iconify/svelte": "^4.0.2",
 		"@sveltejs/adapter-auto": "^3.2.0",
@@ -51,11 +51,19 @@
 		"typescript": "^5.4.5",
 		"vite": "^5.2.11"
 	},
-	"type": "module",
 	"dependencies": {
 		"bip39": "^3.1.0",
 		"bitcoinjs-lib": "^6.1.5",
 		"ethereumjs-util": "^7.1.5",
 		"hdkey": "^2.1.0"
-	}
+	},
+	"engines": {
+		"node": ">=18.17.0"
+	},
+	"keywords": [
+		"svelte",
+		"sveltekit",
+		"typescript",
+		"bip39"
+	]
 }
