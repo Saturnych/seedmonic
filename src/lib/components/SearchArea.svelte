@@ -24,7 +24,7 @@
 		class={`w-full bg-transparent py-2 px-3 placeholder:text-neutral-600 focus:outline-none focus-visible:outline-none ${classes}`}
 		{placeholder}
 		{name}
-	/>
+	></textarea>
 	{#if hasValue}
 		<button
 			on:click={() => (value = '')}
