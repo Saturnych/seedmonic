@@ -15,13 +15,13 @@
 	let search: string = '';
 	$: _search = search.toLowerCase().trim();
 
-	const clearSearch = () => (search = '');
+	const clearSearch = (): void => (search = '');
 
-	const wordOrdinal = (word: string) => {
+	const wordOrdinal = (word: string): number => {
 		return wordlist.indexOf(word) + 1;
 	};
 
-	const paddedOrdinal = (word: string) => {
+	const paddedOrdinal = (word: string): string => {
 		return wordOrdinal(word).toString().padStart(4, '0');
 	};
 
@@ -68,10 +68,10 @@
 	</div>
 
 	<section>
-		{#if filteredWordlist?.length}
+		{#if filteredWordlist?.length>0}
 			<div class="cursor-crosshair columns-1 gap-8 sm:mt-16 sm:columns-3 md:columns-4">
 				{#each filteredWordlist as word, i}
-					<Word {word} ordinal={wordOrdinal(word)} highlighted={isFirstExampleOfLetter(word, i)} />
+					<Word {word} ordinal={wordOrdinal(word)} highlighted={isFirstExampleOfLetter(word, i)} found={filteredWordlist.length} />
 				{/each}
 			</div>
 		{:else}
