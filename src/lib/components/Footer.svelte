@@ -19,7 +19,7 @@
 {/if}
 
 <div class="mt-12 px-1">
-	<a href="{consts.repo}" target="_blank" class="flex items-center gap-2 text-neutral-50/20 hover:underline">source&nbsp;<Icon icon="ic:sharp-arrow-outward" /></a>
+	<a href="{consts.repository}" title="{consts.repository}" target="_blank" class="flex items-center gap-2 text-neutral-50/20 hover:underline">source&nbsp;<Icon icon="ic:sharp-arrow-outward" /></a>
 </div>
 
 <div class="mt-auto">
