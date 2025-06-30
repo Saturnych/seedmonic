@@ -17,7 +17,6 @@
 
 {#if !dev}
 	<Metrika />
-	<Posthog />
 {/if}
 
 <div class="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-2 px-8 pb-12 font-mono sm:pb-16">
